@@ -32,7 +32,9 @@ sudo pacman -S python tk
 ```
 
 #### Debian/Raspbian
+```
 sudo apt-get install python python-imaging-tk
+```
 
 ### Add your API Token
 Go to [darksky.net](https://darksky.net/dev/) and sign up for a developer account.
