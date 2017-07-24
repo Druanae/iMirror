@@ -137,11 +137,19 @@ class Weather():
 
         except Exception as exc:
             print_exc()
-            print("Error %s. Cannot get weather.") % exc
+            print("Error %s. Cannot get weather." % exc)
 
+def test_output():
+    """
+    test_output
+    tests output of classes in the program.
+    """
 
-weather = Weather()
-print("The current temperature is %sC" % weather.temperature)
-print("The current summary is: %s" % weather.currently)
-print("The current forecast is: %s" % weather.forecast)
-print("The current location is: %s" % weather.location)
+    weather = Weather()
+    print("The current temperature is %sC" % weather.temperature)
+    print("The current summary is: %s" % weather.currently)
+    print("The current forecast is: %s" % weather.forecast)
+    print("The current location is: %s" % weather.location)
+
+if __name__ == "__main__":
+    test_output()
