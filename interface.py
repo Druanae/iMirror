@@ -48,6 +48,7 @@ class Weather():
         """
 
         try:
+            ### Fetch IP address using IPify API ###
             # variable to store ipify API URL
             ip_url = "https://api.ipify.org?format=json"
             # fetch data from URL in ip_url and store in a variable
@@ -69,7 +70,7 @@ class Weather():
         """
 
         try:
-            # Fetch location using freegeoip API
+            ### Fetch location using freegeoip API ###
             # variable to store location URL
             location_req_url = "http://freegeoip.net/json/%s" % self.get_ip()
             # fetch data from URL in location_req_url and store in variable
@@ -77,21 +78,68 @@ class Weather():
             # convert fetched data to python object and store in variable
             location_obj = loads(req.text)
 
-            # Change latitude variable if device has moved.
+            # change latitude variable if device has moved.
             if self.latitude != location_obj['latitude']:
                 self.latitude = location_obj['latitude']
-
-            # Change latitude variable if device has moved.
+            # change latitude variable if device has moved.
             if self.longitude != location_obj['longitude']:
                 self.longitude = location_obj['longitude']
+
+            # get current location and store in tmp variable
+            location_tmp = "%s, %s" % \
+                (location_obj['city'], location_obj['region_code'])
+
+            # update weather information
+            if self.location != location_tmp:
+                self.location = location_tmp
 
         except Exception as e:
             print_exc()
             return "Error: %s. Cannot get location." % e
-
 
     def get_weather(self):
         """
         get_weather
         Method that fetches weather information
         """
+
+        try:
+            # Get weather information using Darksky API
+            # variable to store the darksky API URL
+            weather_req_url =\
+                "https://api.darksky.net/forecast/%s/%s,%s?lang=%s&units=%s" \
+                % (WEATHER_API_TOKEN, self.latitude, self.longitude,\
+                WEATHER_LANG, WEATHER_UNIT)
+            # fetch data from URL in weather_req_url and store in a variable
+            req = get(weather_req_url)
+            # convert fetched data to puthon object and store in variable
+            weather_obj = loads(req.text)
+
+            # Assign weather information to variables
+            # variable stores unicode degree character
+            degree_sign = u'\N{DEGREE SIGN}'
+            # get current temperature and store in tmp variable
+            temperature_tmp = "%s%s" % \
+                (str(int(weather_obj['currently']['temperature'])), degree_sign)
+            # get current weather summary and store in tmp variable
+            currently_tmp = weather_obj['currently']['summary']
+            # get the forecast summary and store it in tmp variable
+            forecast_tmp = weather_obj['hourly']['summary']
+
+            # Update weather information
+            if self.currently != currently_tmp:
+                self.currently = currently_tmp
+            if self.forecast != forecast_tmp:
+                self.forecast = forecast_tmp
+            if self.temperature != temperature_tmp:
+                self.temperature = temperature_tmp
+
+        except Exception as e:
+            print_exc()
+            print ("Error %s. Cannot get weather.") % e
+
+w = Weather()
+print ("The current temperature is %sC" % w.temperature)
+print ("The current summary is: %s" % w.currently)
+print ("The current forecast is: %s" % w.forecast)
+print ("The current location is: %s" % w.location)
