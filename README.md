@@ -8,7 +8,7 @@ If you have [git](https://git-scn.com/book/en/v2/Getting-Started-Installing-Git)
 git clone https://github.com/Druanae/iMirror.git
 ```
 
-**Alternatively download a zip from the Repository page.**
+###### _Alternatively download a zip from the Repository page._
 
 Navigate to the folder for the repository.
 ```
