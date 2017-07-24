@@ -3,8 +3,8 @@
 SmartMirror.py
 A python program to output data for use with a smartmirror.
 It fetches weather, news, and time information.
-
 """
+
 from traceback import print_exc
 from json import loads
 import tkinter
@@ -138,6 +138,7 @@ class Weather():
         except Exception as exc:
             print_exc()
             print("Error %s. Cannot get weather.") % exc
+
 
 weather = Weather()
 print("The current temperature is %sC" % weather.temperature)
