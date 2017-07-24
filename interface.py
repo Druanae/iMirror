@@ -11,8 +11,9 @@ import tkinter
 from requests import get
 from feedparser import parse
 
-# Darksky API weather constants
-WEATHER_API_TOKEN = '443a029b56964c639cb8f6da87415c20' # replace with secret key provided at https://darksky.net/dev/account/
+### Darksky API weather constants ###
+# replace with secret key provided at https://darksky.net/dev/account/
+WEATHER_API_TOKEN = '443a029b56964c639cb8f6da87415c20'
 WEATHER_LANG = 'en'
 WEATHER_UNIT = 'uk2'
 
@@ -59,9 +60,9 @@ class Weather():
             # return value stored in 'ip' JSON attribute
             return ip_obj['ip']
 
-        except Exception as e:
+        except Exception as exc:
             print_exc()
-            return "Error: %s. Cannot get IP." % e
+            return "Error: %s. Cannot get IP." % exc
 
     def get_location(self):
         """
@@ -93,9 +94,9 @@ class Weather():
             if self.location != location_tmp:
                 self.location = location_tmp
 
-        except Exception as e:
+        except Exception as exc:
             print_exc()
-            return "Error: %s. Cannot get location." % e
+            return "Error: %s. Cannot get location." % exc
 
     def get_weather(self):
         """
@@ -134,12 +135,12 @@ class Weather():
             if self.temperature != temperature_tmp:
                 self.temperature = temperature_tmp
 
-        except Exception as e:
+        except Exception as exc:
             print_exc()
-            print ("Error %s. Cannot get weather.") % e
+            print("Error %s. Cannot get weather.") % exc
 
-w = Weather()
-print ("The current temperature is %sC" % w.temperature)
-print ("The current summary is: %s" % w.currently)
-print ("The current forecast is: %s" % w.forecast)
-print ("The current location is: %s" % w.location)
+weather = Weather()
+print("The current temperature is %sC" % weather.temperature)
+print("The current summary is: %s" % weather.currently)
+print("The current forecast is: %s" % weather.forecast)
+print("The current location is: %s" % weather.location)
