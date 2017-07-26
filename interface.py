@@ -50,7 +50,7 @@ class Weather():
 
         try:
             ### Fetch location using freegeoip API ###
-            # store location URL uses IP fetched by get_ip() in variable
+            # store location URL. Uses IP fetched by get_ip() in variable
             location_req_url = "http://freegeoip.net/json/%s" % self.get_ip()
             # fetch data from URL in location_req_url and store in variable
             req = get(location_req_url)
@@ -84,7 +84,7 @@ class Weather():
 
         try:
             ### Get weather information using Darksky API ###
-            # Store the darksky API URL in variable
+            # store the darksky API URL in variable
             weather_req_url =\
                 "https://api.darksky.net/forecast/%s/%s,%s?lang=%s&units=%s" \
                 % (WEATHER_API_TOKEN, self.latitude, self.longitude,\
@@ -95,7 +95,7 @@ class Weather():
             weather_obj = loads(req.text)
 
             ### Assign weather information to variables ###
-            # Store unicode degree character in variable
+            # store unicode degree character in variable
             degree_sign = u'\N{DEGREE SIGN}'
             # get current temperature and store in tmp variable
             temperature_tmp = "%s%s" % \
@@ -105,7 +105,7 @@ class Weather():
             # get the forecast summary and store it in tmp variable
             forecast_tmp = weather_obj['hourly']['summary']
 
-            # Update weather information
+            # update weather information
             if self.currently != currently_tmp:
                 self.currently = currently_tmp
             if self.forecast != forecast_tmp:
@@ -152,12 +152,12 @@ def get_news():
         headlines = []
 
         ### Fetch XML data from news website ###
-        # Store XML url in variable
+        # store XML url in variable
         news_url = "http://feeds.bbci.co.uk/news/uk/rss.xml"
-        # Parse XML data into Python object and store in variable
+        # parse XML data into Python object and store in variable
         feed = parse(news_url)
 
-        # Iterate through XML and store first 5 headlines in self.headlines
+        # iterate through XML and store first 5 headlines in self.headlines
         index = 0
         for item in feed.entries[0:5]:
             headlines.insert(index, item.title)
@@ -173,7 +173,7 @@ def get_news():
 def test_output():
     """
     test_output
-    tests output of classes in the program.
+    tests output of classes and methods in the program.
     """
 
     weather = Weather()
