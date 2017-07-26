@@ -23,7 +23,7 @@ class Weather():
     Weather class
     This class contains methods that fetch weather information.
     Weather information is based upon location.
-    Location is determined by IP address.
+    Location is determined using the device's IP address.
     """
 
 
@@ -42,28 +42,6 @@ class Weather():
         self.get_location()
         self.get_weather()
 
-    def get_ip(self):
-        """
-        get_ip
-        gets the IP address of the device and returns it
-        """
-
-        try:
-            ### Fetch IP address using IPify API ###
-            # variable to store ipify API URL
-            ip_url = "https://api.ipify.org?format=json"
-            # fetch data from URL in ip_url and store in a variable
-            req = get(ip_url)
-            # convert fetched data to python object and store in variable
-            ip_obj = loads(req.text)
-
-            # return value stored in 'ip' JSON attribute
-            return ip_obj['ip']
-
-        except Exception as exc:
-            print_exc()
-            return "Error: %s. Cannot get IP." % exc
-
     def get_location(self):
         """
         get_location
@@ -72,7 +50,7 @@ class Weather():
 
         try:
             ### Fetch location using freegeoip API ###
-            # variable to store location URL
+            # store location URL uses IP fetched by get_ip() in variable
             location_req_url = "http://freegeoip.net/json/%s" % self.get_ip()
             # fetch data from URL in location_req_url and store in variable
             req = get(location_req_url)
@@ -105,8 +83,8 @@ class Weather():
         """
 
         try:
-            # Get weather information using Darksky API
-            # variable to store the darksky API URL
+            ### Get weather information using Darksky API ###
+            # Store the darksky API URL in variable
             weather_req_url =\
                 "https://api.darksky.net/forecast/%s/%s,%s?lang=%s&units=%s" \
                 % (WEATHER_API_TOKEN, self.latitude, self.longitude,\
@@ -116,8 +94,8 @@ class Weather():
             # convert fetched data to puthon object and store in variable
             weather_obj = loads(req.text)
 
-            # Assign weather information to variables
-            # variable stores unicode degree character
+            ### Assign weather information to variables ###
+            # Store unicode degree character in variable
             degree_sign = u'\N{DEGREE SIGN}'
             # get current temperature and store in tmp variable
             temperature_tmp = "%s%s" % \
@@ -139,6 +117,59 @@ class Weather():
             print_exc()
             print("Error %s. Cannot get weather." % exc)
 
+
+    @staticmethod
+    def get_ip():
+        """
+        get_ip
+        gets the IP address of the device and returns it
+        """
+
+        try:
+            ### Fetch IP address using IPify API ###
+            # store ipify API URL in variable
+            ip_url = "https://api.ipify.org?format=json"
+            # fetch data from URL in ip_url and store in variable
+            req = get(ip_url)
+            # convert fetched data to python object and store in variable
+            ip_obj = loads(req.text)
+
+            # return value stored in 'ip' JSON attribute
+            return ip_obj['ip']
+
+        except Exception as exc:
+            print_exc()
+            return "Error: %s. Cannot get IP." % exc
+
+def get_news():
+    """
+    get_news class
+    fetches XML data from the BBC using feedparser
+    """
+
+    try:
+        # store news headlines in variable
+        headlines = []
+
+        ### Fetch XML data from news website ###
+        # Store XML url in variable
+        news_url = "http://feeds.bbci.co.uk/news/uk/rss.xml"
+        # Parse XML data into Python object and store in variable
+        feed = parse(news_url)
+
+        # Iterate through XML and store first 5 headlines in self.headlines
+        index = 0
+        for item in feed.entries[0:5]:
+            headlines.insert(index, item.title)
+            index += 1
+
+        # return headline info
+        return headlines
+
+    except Exception as exc:
+        print_exc()
+        print("Error %s. Cannot get weather." % exc)
+
 def test_output():
     """
     test_output
@@ -150,6 +181,10 @@ def test_output():
     print("The current summary is: %s" % weather.currently)
     print("The current forecast is: %s" % weather.forecast)
     print("The current location is: %s" % weather.location)
+
+    headlines = get_news()
+    for i in range(0, len(headlines)):
+        print("Headline %s: %s" % (i+1, headlines[i]))
 
 if __name__ == "__main__":
     test_output()
