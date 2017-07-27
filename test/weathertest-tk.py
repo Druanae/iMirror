@@ -10,14 +10,21 @@ from json import loads
 import tkinter as tk
 from requests import get
 
+from PIL import Image, ImageTk
+
 ### Darksky API weather constants ###
 # replace with secret key provided at https://darksky.net/dev/account/
 WEATHER_API_TOKEN = '443a029b56964c639cb8f6da87415c20'
 WEATHER_LANG = 'en'
 WEATHER_UNIT = 'uk2'
 
-### Formatting constants for tkinter
+### Formatting constants for tkinter ###
+XL_TEXT = '96'
+LG_TEXT = '48'
+ME_TEXT = '28'
+SM_TEXT = '18'
 
+###
 
 class Weather():
     """
