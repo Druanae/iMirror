@@ -280,7 +280,7 @@ class Clock(tk.Frame):
                                    fg="white", bg="black")
         self.date_label.pack(side=tk.TOP, anchor=tk.E)
 
-        self.day_label =tk. Label(self, font=('Lato', SM_TEXT),\
+        self.day_label = tk.Label(self, font=('Lato', SM_TEXT),\
                                   fg="white", bg="black")
         self.day_label.pack(side=tk.TOP, anchor=tk.E)
         self.update_time()
@@ -386,19 +386,19 @@ class BuildGUI:
         sets the configuration options for the GUI and builds it.
         """
 
-        self.tk = tk.Tk()
-        self.tk.config(background='black')
-        self.left_frame = tk.Frame(self.tk, background='black')
-        self.right_frame = tk.Frame(self.tk, background='black')
+        self.root = tk.Tk()
+        self.root.config(background='black')
+        self.left_frame = tk.Frame(self.root, background='black')
+        self.right_frame = tk.Frame(self.root, background='black')
+        self.bottom_frame = tk.Frame(self.root, background='black')
+        self.bottom_frame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=tk.YES)
         self.left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
         self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.YES)
-        self.bottom_right_frame = tk.Frame(self.right_frame, background='black')
-        self.bottom_right_frame.pack(side=tk.BOTTOM, fill=tk.BOTH)
         self.state = False
 
         # Return toggles between fullscreen modes. Escape exits fullscreen
-        self.tk.bind("<Return>", self.toggle_fullscreen)
-        self.tk.bind("<Escape>", self.end_fullscreen)
+        self.root.bind("<Return>", self.toggle_fullscreen)
+        self.root.bind("<Escape>", self.end_fullscreen)
 
         # clock
         self.clock = Clock(self.right_frame)
@@ -407,8 +407,8 @@ class BuildGUI:
         self.weather = Weather(self.left_frame)
         self.weather.pack(side=tk.LEFT, anchor=tk.N, padx=50, pady=50)
         #news
-        self.news = News(self.bottom_right_frame)
-        self.news.pack(side=tk.RIGHT, anchor=tk.N, padx=50, pady=50)
+        self.news = News(self.bottom_frame)
+        self.news.pack(side=tk.RIGHT, anchor=tk.S, padx=50, pady=50)
         self.news.headlines_label.config(justify=tk.RIGHT)
 
     def toggle_fullscreen(self, event=None):
@@ -418,7 +418,7 @@ class BuildGUI:
         """
 
         self.state = not self.state
-        self.tk.attributes("-fullscreen", self.state)
+        self.root.attributes("-fullscreen", self.state)
         return "break"
 
     def end_fullscreen(self, event=None):
@@ -427,11 +427,11 @@ class BuildGUI:
         ends the GUI's fullscreen state when user presses escape.
         """
         self.state = False
-        self.tk.attributes("-fullscreen", False)
+        self.root.attributes("-fullscreen", False)
         return "break"
 
 
 # Start the program.
 if __name__ == "__main__":
     WINDOW = BuildGUI()
-    WINDOW.tk.mainloop()
+    WINDOW.root.mainloop()
