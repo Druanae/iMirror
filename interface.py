@@ -26,19 +26,19 @@ WEATHER_LANG = 'en'
 WEATHER_UNIT = 'uk2'
 # maps
 ICON_LOOKUP = {
-    'clear-day': "icons/sun.png",
-    'wind': "icons/wind.png",
-    'cloudy': "icons/cloud.png",
-    'partly-cloudy-day': "icons/sun-cloud.png",
-    'rain': "icons/rain.png",
-    'snow': "icons/snow.png",
-    'snow-thin': "icons/snow.png",
-    'fog': "icons/haze.png",
-    'clear-night': "icons/moon.png",
-    'partly-cloudy-night': "icons/moon-cloud.png",
-    'thunderstorm': "icons/storm.png",
-    'tornado': "icons/tornado.png",
-    'hail': "icons/hail.png"
+    'clear-day': "icons/sun.png",  # Clear Sky
+    'wind': "icons/wind.png",  # Wind
+    'cloudy': "icons/cloud.png",  # Cloudy day
+    'partly-cloudy-day': "icons/sun-cloud.png",  # Partial clouds
+    'rain': "icons/rain.png",  # Rain
+    'snow': "icons/snow.png",  # Snow
+    'snow-thin': "icons/snow.png",  # Sleet
+    'fog': "icons/fog.png",  # Fog
+    'clear-night': "icons/moon.png",  # Clear night
+    'partly-cloudy-night': "icons/moon-cloud.png",  # Partial clouds night
+    'thunderstorm': "icons/lightning.png",  # Storm
+    'tornado': "icons/tornado.png",  # tornado
+    'hail': "icons/hail.png"  # hail
 }
 ### Locale and time constants ###
 LOCALE_LOCK = Lock()
@@ -62,6 +62,7 @@ def setlocale(name):
     setlocale class
     used to set the locale using system locale for accurate time information.
     """
+
     with LOCALE_LOCK:
         saved = locale.setlocale(locale.LC_ALL)
         try:
@@ -96,16 +97,16 @@ class Weather(tk.Frame):
         self.icon = ''
 
         # tkinter settings
-        self.degree_frame = tk.Frame(self, bg='black')
+        self.degree_frame = tk.Frame(self, bg="black")
         self.degree_frame.pack(side=tk.TOP, anchor=tk.W)
 
         self.temperature_label = tk.Label(self.degree_frame, \
                                           font=('Lato', XL_TEXT), \
-                                          fg='white', bg='black')
+                                          fg='white', bg="black")
         self.temperature_label.pack(side=tk.LEFT, anchor=tk.N)
 
-        self.icon_label = tk.Label(self.degree_frame, bg='black')
-        self.icon_label.pack(side=tk.LEFT, anchor=tk.N, padx=20)
+        self.icon_label = tk.Label(self.degree_frame, bg="black")
+        self.icon_label.pack(side=tk.LEFT, anchor=tk.N, padx=20, pady=25)
 
         self.currently_label = tk.Label(self, font=('Lato', MD_TEXT), \
                                         fg="white", bg="black")
@@ -199,16 +200,16 @@ class Weather(tk.Frame):
                     # set self.icon to the new icon
                     self.icon = icon_tmp
                     # open the image file
-                    icon = Image.open(icon_tmp)
+                    image = Image.open(icon_tmp)
                     # resize the image and antialias
-                    icon = icon.resize((100, 100), Image.ANTIALIAS)
-                    icon = icon.convert('RGB')
+                    image = image.resize((100, 100), Image.ANTIALIAS)
+                    image = image.convert('RGB')
                     # convert image to tkinter object and store in variable
-                    picture = ImageTk.PhotoImage(icon)
+                    photo = ImageTk.PhotoImage(image)
 
                     # apply settings to self.icon_label
-                    self.icon_label.config(image=picture)
-                    self.icon_label.image = picture
+                    self.icon_label.config(image=photo)
+                    self.icon_label.image = photo
             else:
                 # remove image
                 self.icon_label.config(image='')
@@ -227,6 +228,8 @@ class Weather(tk.Frame):
         except Exception as exc:
             print_exc()
             print("Error %s. Cannot get weather." % exc)
+
+        self.after(300000, self.get_weather)
 
 
     @staticmethod
@@ -271,7 +274,7 @@ class Clock(tk.Frame):
         tk.Frame.__init__(self, parent, bg='black')
         self.time_label = tk.Label(self, font=('Lato', LG_TEXT),\
                                    fg="white", bg="black")
-        self.time_label.pack(side=tk.TOP, anchor=tk.E)
+        self.time_label.pack(side=tk.TOP, anchor=tk.E, fill=tk.X)
 
         self.date_label = tk.Label(self, font=('Lato', SM_TEXT),\
                                    fg="white", bg="black")
@@ -283,6 +286,11 @@ class Clock(tk.Frame):
         self.update_time()
 
     def update_time(self):
+        """
+        update_time method
+        updates the time using system locale.
+        """
+
         with setlocale(UI_LOCALE):
             if TIME_FORMAT == 12:
                 time_tmp = strftime('%I:%M %p')
@@ -327,7 +335,7 @@ class News(tk.Frame):
         self.news_label.pack(side=tk.TOP, anchor=tk.E)
         self.headlines_label = tk.Label(self, font=('Lato', SM_TEXT), \
                               fg='white', bg='black')
-        self.headlines_label.pack(side=tk.TOP, anchor=tk.E)
+        self.headlines_label.pack(side=tk.TOP, anchor=tk.N)
 
         self.get_news()
 
@@ -336,11 +344,11 @@ class News(tk.Frame):
         get_news class
         fetches XML data from the BBC using feedparser
         """
+
         try:
             # reset headline info in headline_container
             self.headlines_label.config(text="")
 
-            label = {}
             ### Fetch XML data from news website ###
             # store XML url in variable
             news_url = "http://feeds.bbci.co.uk/news/uk/rss.xml"
@@ -355,15 +363,15 @@ class News(tk.Frame):
                 headlines.insert(index, item.title)
                 index += 1
 
-            for i in headlines:
-                pass
+            # join the contents of headlines into
+            headlines_tmp = '\n'.join(headlines)
+            self.headlines_label.config(text=headlines_tmp)
 
         except Exception as exc:
             print_exc()
-            print("Error %s. Cannot get weather." % exc)
+            print("Error %s. Cannot get news." % exc)
 
-        self.after(600000, self.get_news)
-
+        self.after(300000, self.get_news)
 
 class BuildGUI:
     """
@@ -373,39 +381,57 @@ class BuildGUI:
 
 
     def __init__(self):
+        """
+        BuildGUI constructor
+        sets the configuration options for the GUI and builds it.
+        """
+
         self.tk = tk.Tk()
         self.tk.config(background='black')
-        self.top_frame = tk.Frame(self.tk, background='black')
-        self.top_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.YES)
-        self.bottom_frame = tk.Frame(self.tk, background='black')
-        self.bottom_frame.pack(side=tk.BOTTOM, fill=tk.BOTH,expand=tk.YES)
+        self.left_frame = tk.Frame(self.tk, background='black')
+        self.right_frame = tk.Frame(self.tk, background='black')
+        self.left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
+        self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.YES)
+        self.bottom_right_frame = tk.Frame(self.right_frame, background='black')
+        self.bottom_right_frame.pack(side=tk.BOTTOM, fill=tk.BOTH)
         self.state = False
 
-        # Return toggles between fullscreen modes. Escape exiists fullscreen
+        # Return toggles between fullscreen modes. Escape exits fullscreen
         self.tk.bind("<Return>", self.toggle_fullscreen)
         self.tk.bind("<Escape>", self.end_fullscreen)
 
         # clock
-        self.clock = Clock(self.top_frame)
+        self.clock = Clock(self.right_frame)
         self.clock.pack(side=tk.RIGHT, anchor=tk.N, padx=50, pady=50)
         #weather
-        self.weather = Weather(self.top_frame)
+        self.weather = Weather(self.left_frame)
         self.weather.pack(side=tk.LEFT, anchor=tk.N, padx=50, pady=50)
         #news
-        #self.news = News(self.top_frame)
-        #self.news.pack(side=tk.RIGHT, anchor=tk.N, padx=50, pady=50)
+        self.news = News(self.bottom_right_frame)
+        self.news.pack(side=tk.RIGHT, anchor=tk.N, padx=50, pady=50)
+        self.news.headlines_label.config(justify=tk.RIGHT)
 
     def toggle_fullscreen(self, event=None):
+        """
+        toggle_fullscreen method
+        toggles the GUI's fullscreen state when user presses return
+        """
+
         self.state = not self.state
         self.tk.attributes("-fullscreen", self.state)
         return "break"
 
     def end_fullscreen(self, event=None):
+        """
+        end_fullscreen method
+        ends the GUI's fullscreen state when user presses escape.
+        """
         self.state = False
         self.tk.attributes("-fullscreen", False)
         return "break"
 
 
+# Start the program.
 if __name__ == "__main__":
-    w = BuildGUI()
-    w.tk.mainloop()
+    WINDOW = BuildGUI()
+    WINDOW.tk.mainloop()
