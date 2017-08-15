@@ -11,7 +11,7 @@ git clone https://github.com/Druanae/iMirror.git
 _Alternatively download a zip from the Repository page._
 
 Navigate to the folder for the repository.
-```
+```bash
 cd iMirror
 ```
 
@@ -22,23 +22,25 @@ Packages:
 * tkinter
 
 Ensure you have [pip](https://pip.pypa.io/en/stable/installing/) installed.
-```
+```bash
 sudo pip install -r requirements.txt
 ```
 
-##### Font
+#### Font
 Install the Lato fonts in the font folder.
-```
-mkdir ~/.fonts && cp fonts/* ~/.fonts && fc-cache -vf .fonts
+```bash
+mkdir ~/.fonts
+cp fonts/* ~/.fonts
+fc-cache -vf .fonts
 ```
 
 #### Arch Linux
-```
+```bash
 sudo pacman -S python tk
 ```
 
 #### Debian/Raspbian
-```
+```bash
 sudo apt-get install python python-imaging-tk
 ```
 
@@ -52,6 +54,6 @@ WEATHER_API_TOKEN = '[TOKEN]' # replace with secret key provided at https://dark
 
 ## Running
 To run the application use the following command in the root of the repository:
-```
+```bash
 python interface.py
 ```
