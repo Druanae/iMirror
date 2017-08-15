@@ -29,9 +29,7 @@ sudo pip install -r requirements.txt
 ##### Font
 Install the Lato fonts in the font folder.
 ```
-mkdir ~/.fonts
-cp fonts/* ~/.fonts
-fc-cache -vf .fonts
+mkdir ~/.fonts && cp fonts/* ~/.fonts && fc-cache -vf .fonts
 ```
 
 #### Arch Linux
