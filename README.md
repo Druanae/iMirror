@@ -26,6 +26,14 @@ Ensure you have [pip](https://pip.pypa.io/en/stable/installing/) installed.
 sudo pip install -r requirements.txt
 ```
 
+##### Font
+Install the Lato fonts in the font folder.
+```
+mkdir ~/.fonts
+cp fonts/* ~/.fonts
+fc-cache -vf .fonts
+```
+
 #### Arch Linux
 ```
 sudo pacman -S python tk
