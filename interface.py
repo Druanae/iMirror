@@ -24,7 +24,7 @@ except ImportError:
 
 ### Darksky API weather constants ###
 # replace with secret key provided at https://darksky.net/dev/account/
-WEATHER_API_TOKEN = '[TOKEN]'
+WEATHER_API_TOKEN = '443a029b56964c639cb8f6da87415c20'
 # For full lust of language and unit paramaeters see:
 # https://darksky.net/dev/docs/forecast
 WEATHER_LANG = 'en'
