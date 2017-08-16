@@ -11,11 +11,16 @@ from time import strftime
 from threading import Lock
 import locale
 
-import tkinter as tk
 from contextlib import contextmanager
 from requests import get
 from feedparser import parse
 from PIL import Image, ImageTk
+
+# try/except to use correct Tkinter library depending on device.
+try:
+    import Tkinter as tk
+except ImportError:
+    import tkinter as tk
 
 ### Darksky API weather constants ###
 # replace with secret key provided at https://darksky.net/dev/account/
@@ -168,9 +173,9 @@ class Weather(tk.Frame):
             ### Get weather information using Darksky API ###
             # store the darksky API URL in variable
             weather_req_url =\
-                    "https://api.darksky.net/forecast/%s/%s,%s?lang=%s&units=%s" \
-                    % (WEATHER_API_TOKEN, self.latitude, self.longitude,\
-                       WEATHER_LANG, WEATHER_UNIT)
+                "https://api.darksky.net/forecast/%s/%s,%s?lang=%s&units=%s" \
+                % (WEATHER_API_TOKEN, self.latitude, self.longitude,\
+                   WEATHER_LANG, WEATHER_UNIT)
             # fetch data from URL in weather_req_url and store in a variable
             req = get(weather_req_url)
             # convert fetched data to puthon object and store in variable
