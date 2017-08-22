@@ -48,7 +48,7 @@ ICON_LOOKUP = {
 ### Locale and time constants ###
 LOCALE_LOCK = Lock()
 # set to your own locale. Use locale -a to list installed locales
-UI_LOCALE = 'en_GB.utf-8'
+UI_LOCALE = ''
 # leave blank for 24h time format
 TIME_FORMAT = None
 # check python doc for strftime() for more date formatting options
