@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-SmartMirror.py
+interface.py
 A python program to output data for use with a smartmirror.
 It fetches weather, news, and time information.
 """
