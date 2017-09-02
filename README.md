@@ -1,5 +1,5 @@
 # iMirror Project
-Raspberry Pi powered Smart Mirror built in Python 3.6
+Raspberry Pi Powered Smart Mirror Built in Python 3.6
 
 ## Installation and Updating
 ### Code
