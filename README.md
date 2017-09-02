@@ -1,5 +1,5 @@
 # iMirror Project
-Raspberry Pi powered Smart Mirror with Alexa Integration built in Python 3.6
+Raspberry Pi powered Smart Mirror built in Python 3.6
 
 ## Installation and Updating
 ### Code
