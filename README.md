@@ -6,11 +6,9 @@ Raspberry Pi Powered Smart Mirror Built in Python 3.6
 If you have [git](https://git-scn.com/book/en/v2/Getting-Started-Installing-Git) installed, clone the repository.
 ```
 git clone https://github.com/Druanae/iMirror.git
-```
-
-_Alternatively download a zip from the Repository page._
-
-Navigate to the folder for the repository.
+```  
+_Alternatively download a zip from the Repository page._  
+Navigate to the folder for the repository.  
 ```bash
 cd iMirror
 ```
@@ -44,12 +42,20 @@ sudo pacman -S python tk
 sudo apt-get install python python-imaging-tk
 ```
 
+## Configuration
 ### Add your API Token
-Go to [darksky.net](https://darksky.net/dev/) and sign up for a developer account.
-
-Edit **interface.py** and replace the contents of WEATHER_API_TOKEN with the secret key provided on [Darksky's account page](https://darksky.net/dev/account/).
+Go to [darksky.net](https://darksky.net/dev/) and sign up for a developer account.  
+Edit **interface.py** and replace the contents of WEATHER_API_TOKEN with the secret key provided on [Darksky's account page](https://darksky.net/dev/account/).  
 ```python
 WEATHER_API_TOKEN = '[TOKEN]' # replace with secret key provided at https://darksky.net/dev/account/
+```
+
+### Configure LightDM
+If you are running Raspbian Jessie or Stretch then you will need to disable screenblanking in the lightdm configuration file.  
+Open the file /etc/lightdm/lightdm.conf (you will need superuser permissions.) and look for the section labelled [SeatDefaults] and add or change the xserver-command variable to look like:
+```
+[SeatDefaults]
+xserver-command=X -s 0 -dpms
 ```
 
 ## Running
