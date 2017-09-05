@@ -54,7 +54,7 @@ WEATHER_API_TOKEN = '[TOKEN]' # replace with secret key provided at https://dark
 ### Configure LightDM
 If you are running Raspbian Jessie or Stretch then you will need to disable screenblanking in the lightdm configuration file.
 
-Open the file /etc/lightdm/lightdm.conf (you will need superuser permissions.) and look for the section labelled [SeatDefaults] and add or change the xserver-command variable to look like:
+Open the file /etc/lightdm/lightdm.conf (you will need superuser permissions.) and look for the section labelled [SeatDefaults] then add or change the xserver-command variable to match:
 ```
 [SeatDefaults]
 xserver-command=X -s 0 -dpms
