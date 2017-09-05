@@ -45,7 +45,7 @@ sudo apt-get install python python-imaging-tk
 
 ## Configuration
 ### Add your API Token
-Go to [darksky.net](https://darksky.net/dev/) and sign up for a developer account.
+Go to [darksky.net](https://darksky.net/dev/) and sign up for a developer account.  
 Edit **interface.py** and replace the contents of WEATHER_API_TOKEN with the secret key provided on [Darksky's account page](https://darksky.net/dev/account/).
 ```python
 WEATHER_API_TOKEN = '[TOKEN]' # replace with secret key provided at https://darksky.net/dev/account/
