@@ -53,7 +53,6 @@ WEATHER_API_TOKEN = '[TOKEN]' # replace with secret key provided at https://dark
 
 ### Disable Screenblanking
 If you are running Raspbian Jessie or Stretch then you will need to disable screenblanking.
-
 #### XScreensaver
 Installing xscreensaver is  the easiest method of disabling screen blanking. Once installed you should be able to edit screensaver preferences in the Pi's Preferences menu.
 ```bash
