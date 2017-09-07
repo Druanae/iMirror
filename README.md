@@ -51,13 +51,14 @@ Edit **interface.py** and replace the contents of WEATHER_API_TOKEN with the sec
 WEATHER_API_TOKEN = '[TOKEN]' # replace with secret key provided at https://darksky.net/dev/account/
 ```
 
-### Configure LightDM
-If you are running Raspbian Jessie or Stretch then you will need to disable screenblanking in the lightdm configuration file.
+### Disable Screenblanking
+If you are running Raspbian Jessie or Stretch then you will need to disable screenblanking.
 
-Open the file /etc/lightdm/lightdm.conf (you will need superuser permissions.) and look for the section labelled [SeatDefaults] then add or change the xserver-command variable to match:
-```conf
-[SeatDefaults]
-xserver-command=X -s 0 -dpms
+#### XScreensaver
+Installing xscreensaver is  the easiest method of disabling screen blanking. Once installed you should be able to edit screensaver preferences in the Pi's Preferences menu.
+```bash
+sudo apt-get update
+sudo apt-get install xscreensaver
 ```
 
 ## Running
