@@ -399,7 +399,8 @@ class BuildGUI:
         self.bottom_frame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=tk.YES)
         self.left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
         self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.YES)
-        self.state = False
+        self.state = True
+        self.root.attributes("-fullscreen", True)
 
         # Return toggles between fullscreen modes. Escape exits fullscreen
         self.root.bind("<Return>", self.toggle_fullscreen)
